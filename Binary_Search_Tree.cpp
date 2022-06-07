@@ -23,7 +23,6 @@ struct node
 };
 
 node<T>* root;
-
 public:
     BST() : root(nullptr) {}
 
@@ -47,7 +46,7 @@ public:
 
     BST& operator=(const BST<T>& other)
     {
-    if(&root == &other.root) {
+    if(this == &other) {
      return *this;
     }
     copy(root,other.root);
@@ -63,7 +62,7 @@ public:
     template<typename T1>
     friend std::ostream& operator<<(std::ostream& output, BST<T1>& obj);
 
-    friend BST operator+(BST<T>& item,T value) //////////////////////////////////
+    friend BST operator+(BST<T>& item,T value)
     {
     BST<T> new_item;
     item.add_value(item.root, value,new_item.root);
@@ -121,6 +120,7 @@ public:
     bool equal = false;
     std::vector<T> v_erase;
     std::vector<T> vec;
+    std::vector<T> itr;
     int number_nodes{};
     T* finD;
     BST merge(BST<T> t)
@@ -128,8 +128,11 @@ public:
     Merge(root, t.root);
     return *this;
     }
-
+    void begin() {
+        inorder();
+    }
 private:
+    
     void add_value(node<T>* item,  T value, node<T>*& new_item);
     void find_function(node<T>* root, T value);
     void row(node<T>* root, int value);
@@ -152,7 +155,7 @@ private:
 
 int main()
 {
-   return 0;
+      return 0;
 }
 
 template<typename T>
