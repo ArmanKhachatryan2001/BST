@@ -122,7 +122,6 @@ public:
     std::vector<T> vec;
     std::vector<T> itr;
     int number_nodes{};
-    T* finD;
     BST merge(BST<T> t)
     {
     Merge(root, t.root);
@@ -132,9 +131,9 @@ public:
         inorder();
     }
 private:
-    
+
     void add_value(node<T>* item,  T value, node<T>*& new_item);
-    void find_function(node<T>* root, T value);
+    bool find_function(node<T>* root, T value, T* finD);
     void row(node<T>* root, int value);
     void containS(node<T>* obj);
     void Merge(node<T>* obj1, node<T>* obj2);
@@ -155,6 +154,10 @@ private:
 
 int main()
 {
+    BST<int> a = {778,55,6,9};
+    a.erase(778);
+    BST<int> b = {77,55,6,3};
+    std::cout << a;
       return 0;
 }
 
@@ -224,16 +227,17 @@ void BST<T>::erase(T val)
 }
 
 template<typename T>
-void BST<T>::find_function(node<T>* root, T value)
+bool BST<T>::find_function(node<T>* root, T value,T* finD)
 {
     if(root == nullptr) {
-    return ;
+    return false;
     }
     if(value == root->m_item ) {
     finD = &root->m_item;
+    return true;
     }
-    find_function(root->m_left, value);
-    find_function(root->m_right, value);
+    find_function(root->m_left, value, finD);
+    find_function(root->m_right, value, finD);
 }
 
 template<typename T>
@@ -322,11 +326,9 @@ template<typename T>
 void BST<T>::erase_itr(T value, node<T>* root)
 {
     for(auto itr = v_erase.begin(); itr != v_erase.end(); ++itr) {
-    if(*itr == value) {
-    v_erase.erase(itr);
-    itr--;
-    }
+    if(*itr != value) {
     insert(*itr);
+    }
     }
 }
 
@@ -483,19 +485,20 @@ T BST<T>::get_root_data()
 template<typename T>
 bool BST<T>::contains(T value)
 {
-     containS(root);
+    containS(root);
     return Contains(value);
 }
 
 template<typename T>
 T* BST<T>::find(T value)
 {
-     find_function(root, value);
-     if(*finD != value) {
-     std::cout << "There is no such number" << std::endl;
-     finD = nullptr;
-     }
-     return finD;
+    T* finD;
+    if(!find_function(root, value, finD)) {
+    std::cout << "There is no such number" << std::endl;
+    finD = nullptr;
+    return finD;
+    }
+    return finD;
 }
 
 template<typename T>
