@@ -130,12 +130,13 @@ public:
     void begin() {
         inorder();
     }
+    T non_find{};
 private:
 
     void add_value(node<T>* item,  T value, node<T>*& new_item);
-    bool find_function(node<T>* root, T value, T* finD);
+    bool find_function(node<T>* root, T value, T*& finD);
     void row(node<T>* root, int value);
-    void containS(node<T>* obj);
+    bool containS(node<T>* obj, T value);
     void Merge(node<T>* obj1, node<T>* obj2);
     void number_of_nodes(node<T>* obj);
     int  get__height(node<T>* height);
@@ -149,16 +150,10 @@ private:
     void copy(node<T>*& root, node<T>* croot);
     void push(node<T>*& root, T value);
     void vector_print();
-    bool Contains(T value);
 };
 
 int main()
 {
-    BST<int> a = {778,55,6,9};
-    a.erase(778);
-    BST<int> b = {77,55,6,3};
-    std::cout << a;
-      return 0;
 }
 
 template<typename T>
@@ -227,17 +222,19 @@ void BST<T>::erase(T val)
 }
 
 template<typename T>
-bool BST<T>::find_function(node<T>* root, T value,T* finD)
+bool BST<T>::find_function(node<T>* root, T value, T*& finD)
 {
     if(root == nullptr) {
     return false;
     }
     if(value == root->m_item ) {
     finD = &root->m_item;
+    equal = true;
     return true;
     }
     find_function(root->m_left, value, finD);
     find_function(root->m_right, value, finD);
+    return equal;
 }
 
 template<typename T>
@@ -257,14 +254,17 @@ void BST<T>::row(node<T>* root, int value)
 }
 
 template<typename T>
-void BST<T>::containS(node<T>* obj)
+bool BST<T>::containS(node<T>* obj, T value)
 {
     if(obj == nullptr) {
-    return;
+    return false;
     }
-    vec.push_back(obj->m_item);
-    containS(obj->m_left);
-    containS(obj->m_right);
+    if(obj->m_item == value) {
+    equal = true;
+    }
+    containS(obj->m_left, value);
+    containS(obj->m_right, value);
+    return equal;
 }
 
 template<typename T>
@@ -449,17 +449,6 @@ void BST<T>::vector_print()
 }
 
 template<typename T>
-bool BST<T>::Contains(T value) {
-    for(auto itr = vec.begin(); itr != vec.end(); ++itr) {
-    if(*itr == value) {
-    return true;
-    }
-    }
-    vec.clear();
-    return false;
-}
-
-template<typename T>
 T BST<T>::get_height()
 {
     T height_value = get__height(root);
@@ -485,8 +474,10 @@ T BST<T>::get_root_data()
 template<typename T>
 bool BST<T>::contains(T value)
 {
-    containS(root);
-    return Contains(value);
+    if(containS(root, value)) {
+        return true;
+    }
+    return false;
 }
 
 template<typename T>
@@ -495,7 +486,7 @@ T* BST<T>::find(T value)
     T* finD;
     if(!find_function(root, value, finD)) {
     std::cout << "There is no such number" << std::endl;
-    finD = nullptr;
+    finD = &non_find;
     return finD;
     }
     return finD;
