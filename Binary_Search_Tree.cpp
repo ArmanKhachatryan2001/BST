@@ -483,7 +483,7 @@ bool BST<T>::contains(T value)
 template<typename T>
 T* BST<T>::find(T value)
 {
-    T* finD;
+    T* finD = nullptr;
     if(!find_function(root, value, finD)) {
     std::cout << "There is no such number" << std::endl;
     finD = &non_find;
