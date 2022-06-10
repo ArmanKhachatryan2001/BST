@@ -1,6 +1,91 @@
 template<typename T>
+bool BST<T>::operator!=(BST& not_equal)
+{
+    return !(bool_equal(root, not_equal.root));
+}
+template<typename T>
+bool operator==(  BST<T>& equal,BST<T>& equa)
+{
+    return  equal.bool_equal(equal.root, equa.root);
+}
+template<typename T>
+BST<T> BST<T>::operator+=(BST<T>& plusequal)
+{
+    std::vector<T> outitem;
+    amount(root, plusequal.root, root, outitem);
+    for(auto item : outitem) {
+        insert(item);
+    }
+    return *this;
+}
+template<typename T>
+BST<T> operator+(BST<T>& item,T value)
+{
+    BST<T> new_item;
+    item.add_value(item.root, value,new_item.root);
+    return new_item;
+}
+template<typename T>
+BST<T> BST<T>::operator+(BST<T>& add)
+{
+    BST<T> new_obj;
+    std::vector<T> outitem;
+    amount(root, add.root, new_obj.root, outitem);
+    for(auto item : outitem) {
+        new_obj.insert(item);
+    }
+    return new_obj;
+}
+template<typename T>
+BST<T> BST<T>::merge(BST<T> ob)
+{
+    merge_function(root, ob.root);
+    return *this;
+}
+
+template<typename T>
+BST<T>::~BST()
+{
+delete_root(root);
+}
+template<typename T>
+BST<T>& BST<T>::operator=(BST<T>&& other)
+{
+this->root = other.root;
+    other.root = nullptr;
+    return *this;
+}
+template<typename T>
+BST<T>& BST<T>::operator=(const BST<T>& other)
+{
+    if(this == &other) {
+        return *this;
+    }
+    copy(root,other.root);
+    return *this;
+}
+template<typename T>
+BST<T>::BST( BST<T>&& obj)
+{
+    root = obj.root;
+    obj.root = nullptr;
+}
+template<typename T>
+BST<T>::BST(const BST<T>& cmp)
+{
+    copy(root, cmp.root);
+}
+template<typename T>
+BST<T>::BST(std::initializer_list<T> list) : root(nullptr)
+{
+    for(T item : list) {
+        insert(item);
+    }
+}
+template<typename T>
 std::ostream& operator<<(std::ostream& output, BST<T>& obj)
 {
+    obj.print_vector.clear();
     obj.print_root(obj.root,1);
     for (auto item : obj.print_vector) {
         output << item << " ";
@@ -343,4 +428,3 @@ void BST<T>::add_value(node<T>* item, T value, node<T>*& new_item)
     add_value(item->m_left, value, new_item->m_left);
     add_value(item->m_right, value, new_item->m_right);
 }
-
