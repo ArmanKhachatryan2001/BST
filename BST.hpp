@@ -161,7 +161,7 @@ void BST<T>::row(node<T>* root, int value)
         return;
     }
     if(value == 0) {
-        std::cout << 0 << std::endl;
+        std::cout << root->m_item << " ";
         return;
     }
     if(value > 0) {
