@@ -123,7 +123,10 @@ void BST<T>::postorder()
 }
 template<typename T>
 void BST<T>::insert(T value)
-{
+{   
+    if(value < 0) {
+        return;
+    }
     push(root,value);
 }
 template<typename T>
