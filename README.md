@@ -1,4 +1,4 @@
-#Binary Search Tree
+#Binary Search Tree<br />
 Binary Search Tree is a node-based binary tree data structure which has the following properties: 
 
 1.The left subtree of a node contains only nodes with values lesser than the node value.
