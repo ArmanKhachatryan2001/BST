@@ -1,4 +1,4 @@
-#Binary Search Tree<br />
+<i><h1>#Binary Search Tree</h1><br />
 Binary Search Tree is a node-based binary tree data structure which has the following properties:<br />
 <br />
 1.The left subtree of a node contains only nodes with values lesser than the node value.<br />
@@ -41,4 +41,4 @@ BST functions:<br />
 10.get_root_data() // returns root.<br />
 11.merge() //this function returns two trees connected to each other.<br />
 12.contains() // checks if there is such a value.<br />
-13.find() // this function returns a pointer to the root of a given value.<br />
+13.find() // this function returns a pointer to the root of a given value.</i><br />
