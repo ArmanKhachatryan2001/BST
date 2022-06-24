@@ -8,6 +8,7 @@ Binary Search Tree is a node-based binary tree data structure which has the foll
 <br />
 ![Screenshot from 2022-06-24 13-50-24](https://user-images.githubusercontent.com/104670251/175511507-48ad9686-6ac9-4c95-87fa-5597c9d37744.png)
 <br />
+<br />
 Advantages of Binary Search Tree:<br />
 1.BST is fast in insertion and deletion when balanced.<br />
 2.BST is efficient.<br />
